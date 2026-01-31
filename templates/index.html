@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Guidance - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="body-wrapper">
+        <div class="container">
+            <header>
+                <h1>Career Guidance</h1>
+                <p class="tagline">ML-based Job Recommendations & Skill Gap Analysis</p>
+            </header>
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2>Find Your Dream Career Path</h2>
+                    <p>Enter your skills and discover the best job matches, identify skill gaps, and plan your career development with AI-powered recommendations.</p>
+                    <div class="cta-buttons">
+                        <a href="{{ url_for('search') }}" class="cta-primary">
+                            <i class="fas fa-search"></i> Start Skill Analysis
+                        </a>
+                        <a href="#requirements" class="cta-secondary">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </section>
+
+            <!-- Requirements Section -->
+            <div class="requirements-section" id="requirements">
+                <div class="requirements-card">
+                    <div class="req-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h2>Important Requirements for All Job Roles</h2>
+                    </div>
+                    <div class="req-content">
+                        <div class="req-item">
+                            <div class="req-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="req-text">
+                                <h3>Academic Requirement</h3>
+                                <p><strong>Minimum CGPA:</strong> 7.0/10 or equivalent is mandatory for all job roles</p>
+                                <p class="req-note">Note: Companies may have higher CGPA cutoffs based on role and competition</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="req-item">
+                            <div class="req-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="req-text">
+                                <h3>Essential Soft Skills</h3>
+                                <p><strong>10+ Soft Skills</strong> are compulsory for all professional roles:</p>
+                                <div class="soft-skills-list">
+                                    <span class="soft-skill">Communication</span>
+                                    <span class="soft-skill">Teamwork</span>
+                                    <span class="soft-skill">Problem Solving</span>
+                                    <span class="soft-skill">Leadership</span>
+                                    <span class="soft-skill">Time Management</span>
+                                    <span class="soft-skill">Adaptability</span>
+                                    <span class="soft-skill">Critical Thinking</span>
+                                    <span class="soft-skill">Creativity</span>
+                                    <span class="soft-skill">Emotional Intelligence</span>
+                                    <span class="soft-skill">Conflict Resolution</span>
+                                    <span class="soft-skill">Presentation Skills</span>
+                                    <span class="soft-skill">Negotiation</span>
+                                </div>
+                                <p class="req-note">Develop these alongside technical skills for career success</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features-section" id="features">
+                <h2 class="section-title">How It Works</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Skill Analysis</h3>
+                        <p>Enter your current skills and our AI analyzes them against industry standards</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Job Matching</h3>
+                        <p>Get personalized job recommendations based on your skill profile</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Gap Analysis</h3>
+                        <p>Identify missing skills for your target roles with specific learning paths</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Containers Section -->
+            <div class="info-containers">
+                <!-- Container 1: What is the use of this page -->
+                <div class="info-card">
+                    <div class="info-header">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What is this platform?</h3>
+                    </div>
+                    <div class="info-content">
+                        <p>This ML-based platform analyzes your current skills and recommends the most suitable job roles. It identifies skill gaps and provides personalized learning paths to help you advance in your career.</p>
+                        <ul>
+                            <li>Get personalized job recommendations</li>
+                            <li>Identify skill gaps for your target roles</li>
+                            <li>Plan your career development</li>
+                        </ul><br>
+                        <p>Future Add Ons.</p>
+                        <ul>
+                            <li>Career roadmap</li>
+                            <li>Direct job apply based upon your knowledge</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Container 2: Important Note -->
+                <div class="info-card important-note">
+                    <div class="info-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Important Note</h3>
+                    </div>
+                    <div class="info-content">
+                        <p><strong>Disclaimer:</strong> These recommendations are generated by machine learning algorithms and should be used as guidance only.</p>
+                        <div class="note-points">
+                            <div class="note-point">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Results are based on current market trends</span>
+                            </div>
+                            <div class="note-point">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Confidence scores indicate algorithm certainty</span>
+                            </div>
+                            <div class="note-point">
+                                <i class="fas fa-user-edit"></i>
+                                <span>Consider your personal interests and goals</span>
+                            </div>
+                            <div class="note-point">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Regularly update your skills for accurate results</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Container 3: Developer Details -->
+                <div class="info-card developer-card">
+                    <div class="info-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Website Details</h3>
+                    </div>
+                    <div class="info-content">
+                        <div class="developer-info">
+                            <div class="developer-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="developer-details">
+                                <h4>Career Guidance</h4>
+                                <p>Version 1.0 | ML-Powered</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Flask</span>
+                                    <span class="tech-tag">Machine Learning</span>
+                                    <span class="tech-tag">HTML/CSS</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-info">
+                            <p><i class="fas fa-envelope"></i> support@careerguidance.ai</p>
+                            <p><i class="fas fa-globe"></i> www.careerguidance.ai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to Discover Your Career Path?</h2>
+                    <p>Start your skill analysis now and get personalized job recommendations</p>
+                    <a href="{{ url_for('search') }}" class="cta-primary large">
+                        <i class="fas fa-rocket"></i> Launch Skill Analyzer
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2026 Career Guidance | ML-powered Career Recommendations</p>
+                <p>Minimum CGPA: 7.0+ Required for All Job Roles | Essential Soft Skills Compulsory</p>
+                <div class="footer-links">
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('search') }}">Skill Analyzer</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Toggle info cards on mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const infoHeaders = document.querySelectorAll('.info-header');
+            infoHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        const content = this.nextElementSibling;
+                        content.classList.toggle('expanded');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

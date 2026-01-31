@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Guidance - Skill Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="body-wrapper">
+        <!-- Navigation Bar -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="{{ url_for('home') }}" class="nav-logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Career Guidance</span>
+                </a>
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="{{ url_for('search') }}" class="nav-link active">
+                        <i class="fas fa-search"></i> Skill Analyzer
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-search"></i> Skill Analyzer</h1>
+                <p class="page-subtitle">Enter your skills to get personalized job recommendations and identify skill gaps</p>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <form method="POST" class="skills-form">
+                    <div class="form-group">
+                        <label for="skills">
+                            <i class="fas fa-code"></i> Enter Your Skills (comma-separated)
+                        </label>
+                        <input type="text" 
+                               id="skills"
+                               name="skills" 
+                               placeholder="e.g. python, data structures, machine learning, web development, sql" 
+                               value="{{ skills_input }}"
+                               required>
+                        <p class="form-help">Enter your technical skills separated by commas. Include programming languages, frameworks, tools, etc.</p>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" value="Analyze Skills & Get Recommendations">
+                        {% if history %}
+                        <button type="button" class="clear-btn" id="clearHistory">
+                            <i class="fas fa-trash"></i> Clear History
+                        </button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            {% if results %}
+            <section class="results-section">
+                <div class="results-header">
+                    <h2><i class="fas fa-chart-bar"></i> Top Job Recommendations</h2>
+                    <p class="results-count">{{ results|length }} roles matched your skills</p>
+                </div>
+                
+                <div class="results-grid">
+                    {% for rec in results %}
+                        <div class="card job-card">
+                            <div class="job-card-header">
+                                <h3>{{ rec['Job Role'] }}</h3>
+                                <div class="confidence-badge">
+                                    <span class="confidence-score">{{ "%.1f"|format(rec['Confidence'] * 100) }}%</span>
+                                    <span class="confidence-label">Confidence</span>
+                                </div>
+                            </div>
+                            
+                            {% if rec['Skills More to Learn'] %}
+                                <div class="skills-section">
+                                    <h4><i class="fas fa-graduation-cap"></i> Technical Skills to Develop:</h4>
+                                    <div class="skills-list">
+                                        {% for skill in rec['Skills More to Learn'] %}
+                                            <span class="skill-tag missing">{{ skill }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <p class="skills-count">{{ rec['Skills More to Learn']|length }} skills to learn</p>
+                                </div>
+                            {% else %}
+                                <div class="skills-section">
+                                    <div class="all-skills-achieved">
+                                        <i class="fas fa-trophy"></i>
+                                        <div>
+                                            <h4>Excellent Skills Match!</h4>
+                                            <p>You have all required technical skills for this role</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% elif request.method == "POST" %}
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>No Recommendations Found</h3>
+                    <p>Try entering different or more specific skills. Examples:</p>
+                    <div class="skill-examples">
+                        <span class="example-tag">python, django, sql</span>
+                        <span class="example-tag">java, spring boot, hibernate</span>
+                        <span class="example-tag">javascript, react, node.js</span>
+                        <span class="example-tag">machine learning, python, tensorflow</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- History Sidebar (if on desktop) -->
+            {% if history and not results %}
+            <aside class="history-sidebar">
+                <div class="history-header">
+                    <h2><i class="fas fa-history"></i> Recent Searches</h2>
+                    <button class="clear-btn small" id="clearHistorySidebar">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+                
+                <div class="history-list">
+                    {% for entry in history %}
+                        <div class="history-card">
+                            <div class="history-card-header">
+                                <div class="history-skills">
+                                    <strong>{{ entry['skills'][:40] }}{% if entry['skills']|length > 40 %}...{% endif %}</strong>
+                                </div>
+                                <span class="history-badge">#{{ entry['timestamp'] + 1 }}</span>
+                            </div>
+                            <div class="history-results">
+                                <p class="history-role-count">
+                                    {{ entry['results']|length }} roles recommended
+                                </p>
+                                <div class="history-roles">
+                                    {% for rec in entry['results'][:2] %}
+                                        <div class="history-role">
+                                            <span class="role-title">{{ rec['Job Role'] }}</span>
+                                            <span class="role-skills">{{ rec['Skills More to Learn']|length }} skills</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="history-actions">
+                                <button class="history-action-btn" onclick="refillForm('{{ entry['skills'] }}')">
+                                    <i class="fas fa-redo"></i> Reuse
+                                </button>
+                                <a href="#results" class="history-action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                {% if history|length == 0 %}
+                    <div class="empty-history">
+                        <i class="fas fa-clock"></i>
+                        <p>Your search history will appear here</p>
+                    </div>
+                {% endif %}
+            </aside>
+            {% endif %}
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2026 Career Guidance | ML-powered Career Recommendations</p>
+                <div class="footer-links">
+                    <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+                    <a href="{{ url_for('search') }}"><i class="fas fa-search"></i> Skill Analyzer</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Clear history functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const clearBtns = document.querySelectorAll('.clear-btn');
+            clearBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (confirm('Clear all search history? This action cannot be undone.')) {
+                        fetch('/clear-history', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                location.reload();
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+                });
+            });
+
+            // Refill form with previous search
+            window.refillForm = function(skills) {
+                document.getElementById('skills').value = skills;
+                document.getElementById('skills').focus();
+                window.scrollTo({
+                    top: document.querySelector('.skills-form').offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            };
+
+            // Toggle history on mobile
+            if (window.innerWidth <= 768 && document.querySelector('.history-sidebar')) {
+                const historyHeader = document.querySelector('.history-header');
+                const historyList = document.querySelector('.history-list');
+                
+                if (historyHeader && historyList) {
+                    historyHeader.style.cursor = 'pointer';
+                    historyHeader.addEventListener('click', () => {
+                        historyList.classList.toggle('expanded');
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
